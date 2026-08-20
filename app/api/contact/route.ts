@@ -7,7 +7,7 @@ const contactSchema = z.object({
   phone: z.string().optional(),
   company: z.string().optional(),
   service: z.string().optional(),
-  message: z.string().min(20),
+  message: z.string(),
 });
 
 export async function POST(request: NextRequest) {
