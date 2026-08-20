@@ -13,28 +13,21 @@ const contactSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    console.log('API: Parsed body:', body);
-    
     const validatedData = contactSchema.parse(body);
-
-    console.log('API: Contact form submission:', validatedData);
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully' },
       { status: 200 }
     );
   } catch (error) {
-    console.error('API: Contact form error:', error);
-    
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { success: false, errors: error.flatten().fieldErrors },
         { status: 400 }
       );
     }
-
     return NextResponse.json(
-      { success: false, message: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
+      { success: false, message: 'Internal server error' },
       { status: 500 }
     );
   }

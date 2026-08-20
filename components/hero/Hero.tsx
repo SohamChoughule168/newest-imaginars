@@ -3,9 +3,15 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { AdvancedConstellationCanvas, useConstellationScroll } from '@/components/3d/AdvancedConstellation';
+import { useConstellationScroll } from '@/components/3d/AdvancedConstellation';
 import { useAdvancedCursor, CursorRenderer } from '@/components/cursor/AdvancedCursor';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+const AdvancedConstellationCanvas = dynamic(
+  () => import('@/components/3d/AdvancedConstellation').then(m => m.AdvancedConstellationCanvas),
+  { ssr: false, loading: () => <div className="absolute inset-0 z-0" aria-hidden="true" /> }
+);
 
 interface HeroProps {
   className?: string;
@@ -47,7 +53,7 @@ export function Hero({ className }: HeroProps) {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,163,78,0.08)_0%,transparent_70%)]" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-canvas/50" aria-hidden="true" />
 
-      {/* Advanced 3D Constellation */}
+      {/* Advanced 3D Constellation - dynamically loaded client-side only */}
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <AdvancedConstellationCanvas 
           scrollProgress={scrollProgress} 

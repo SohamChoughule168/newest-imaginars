@@ -3,9 +3,15 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { services } from '@/lib/data';
-import { AdvancedConstellationCanvas, useConstellationScroll } from '@/components/3d/AdvancedConstellation';
+import { useConstellationScroll } from '@/components/3d/AdvancedConstellation';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+const AdvancedConstellationCanvas = dynamic(
+  () => import('@/components/3d/AdvancedConstellation').then(m => m.AdvancedConstellationCanvas),
+  { ssr: false, loading: () => <div className="fixed left-0 top-0 w-full h-screen z-0 pointer-events-none" aria-hidden="true" /> }
+);
 
 interface ServicesProps {
   className?: string;

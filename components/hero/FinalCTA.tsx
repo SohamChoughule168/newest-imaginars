@@ -2,8 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { ConstellationCanvas } from '@/components/3d/Constellation';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+const ConstellationCanvas = dynamic(
+  () => import('@/components/3d/Constellation').then(m => m.ConstellationCanvas),
+  { ssr: false, loading: () => <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true" /> }
+);
 
 interface FinalCTAProps {
   className?: string;
